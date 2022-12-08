@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using demo.DocumentApproval;
+using demo.DynamicForm;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -39,6 +42,9 @@ public class demoDbContext :
      */
 
     //Identity
+
+    public DbSet<SchemaForm> SchemaForm { get; set; }
+    public DbSet<Approval> Approval { get; set; }
     public DbSet<IdentityUser> Users { get; set; }
     public DbSet<IdentityRole> Roles { get; set; }
     public DbSet<IdentityClaimType> ClaimTypes { get; set; }
@@ -75,11 +81,16 @@ public class demoDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(demoConsts.DbTablePrefix + "YourEntities", demoConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<SchemaForm>(b =>
+        {
+            b.ToTable("SchemaForm");
+            b.ConfigureByConvention(); 
+        });
+        builder.Entity<Approval>(b =>
+        {
+            b.ToTable("Approval");
+            b.ConfigureByConvention(); //auto configure for the base class props
+            //b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
     }
 }
