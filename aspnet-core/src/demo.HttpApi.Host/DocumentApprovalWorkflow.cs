@@ -20,16 +20,47 @@ namespace demo
 
         private string BuildSchema()
         {
-            var name = new DynamicSchemaFormDto("name", "Name", "Text");
-            var email = new DynamicSchemaFormDto("email", "Email", "Text");
-            var body = new DynamicSchemaFormDto("body", "Body", "Text");
-            var list = new List<DynamicSchemaFormDto>();
-            list.Add(name);
-            list.Add(email);
-            list.Add(body);
-            var json = JObject.FromObject(new {ListSchema = list });
+            //var name = new DynamicSchemaFormDto("name", "Name", "Text");
+            //var email = new DynamicSchemaFormDto("email", "Email", "Text");
+            //var body = new DynamicSchemaFormDto("body", "Body", "Text");
+            //var list = new List<DynamicSchemaFormDto>();
+            //list.Add(name);
+            //list.Add(email);
+            //list.Add(body);
+            //var json = JObject.FromObject(new {ListSchema = list });
 
-            return json.ToString();
+            //return json.ToString();
+
+            var json = @"{'type': 'object',
+                        'title': 'Approve',
+                        'properties': {
+                                    'name': {
+                                        'title': 'Name',
+                            'type': 'string'
+                                    },
+                          'email': {
+                                        'title': 'Email',
+                            'type': 'string',
+                            'pattern': '^\\S+@\\S+$',
+                            'description': 'Email invalid.'
+                          },
+                          'body': {
+                                        'title': 'Body',
+                            'type': 'string',
+                            'maxLength': 500
+                          }
+                                },
+                        'required': [
+                          'name',
+                          'email',
+                          'body'
+                        ]
+                      }";
+
+            var desJson = JObject.Parse(json);
+
+            return desJson.ToString();
+
         }
 
         public void Build(IWorkflowBuilder builder)

@@ -31,6 +31,7 @@ import { APP_ROUTE_PROVIDER } from './route.provider';
     SettingManagementConfigModule.forRoot(),
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
+
   ],
   declarations: [AppComponent],
   providers: [APP_ROUTE_PROVIDER],
